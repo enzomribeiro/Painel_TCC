@@ -1,609 +1,275 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ETEC Fighting Game — Acompanhamento TCC</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ETEC Fighting Game — Acompanhamento TCC</title>
 
-    :root {
-      --bg-deep:    #0a1628;
-      --bg-card:    #0f2a47;
-      --bg-header:  #0d2137;
-      --border:     #1a3a5c;
-      --blue:       #1b6ca8;
-      --blue-light: #7bafd4;
-      --cyan:       #00bcd4;
-      --green:      #1d9e75;
-      --red:        #e24b4a;
-      --amber:      #ef9f27;
-      --purple:     #7f77dd;
-      --pink:       #d4537e;
-      --text:       #e0e8f0;
-      --text-muted: #7bafd4;
-      --text-dim:   #4a8ab5;
-    }
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--bg-deep);
-      color: var(--text);
-      min-height: 100vh;
-      font-size: 15px;
-    }
+:root {
+  --bg-deep:#0a1628;
+  --bg-card:#0f2a47;
+  --bg-header:#0d2137;
+  --border:#1a3a5c;
+  --blue:#1b6ca8;
+  --cyan:#00bcd4;
+  --green:#1d9e75;
+  --red:#e24b4a;
+  --amber:#ef9f27;
+  --purple:#7f77dd;
+  --pink:#d4537e;
+  --text:#e0e8f0;
+  --text-muted:#7bafd4;
+  --text-dim:#4a8ab5;
+}
 
-    a { color: var(--cyan); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+body {
+  font-family: Arial, sans-serif;
+  background: var(--bg-deep);
+  color: var(--text);
+}
 
-    /* ── Hero ── */
-    .hero {
-      background: var(--bg-header);
-      border-bottom: 1px solid var(--border);
-      padding: 2rem;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .badge {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 500;
-      padding: 3px 10px;
-      border-radius: 20px;
-      margin-right: 6px;
-      margin-bottom: 8px;
-    }
-    .badge-blue  { background: #0c447c; color: #b5d4f4; }
-    .badge-green { background: #085041; color: #9fe1cb; }
-    .hero h1 { font-size: 26px; font-weight: 600; color: #fff; margin-bottom: 4px; }
-    .hero-sub { font-size: 14px; color: var(--text-muted); }
-    .hero-right { text-align: right; }
-    .live-dot {
-      display: inline-block;
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--green);
-      margin-right: 6px;
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
-    .hero-meta { font-size: 12px; color: var(--text-dim); margin-bottom: 6px; }
+/* HERO */
+.hero {
+  background: var(--bg-header);
+  border-bottom: 1px solid var(--border);
+  padding: 2rem;
+  display:flex;
+  justify-content:space-between;
+}
 
-    /* ── Layout ── */
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-    .section { padding: 2rem 0 0; }
-    .section-title {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--cyan);
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.hero h1 { font-size:26px; }
 
-    /* ── Metrics ── */
-    .metrics {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 12px;
-      margin-bottom: 2rem;
-    }
-    .metric {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1rem 1.25rem;
-    }
-    .metric-label { font-size: 11px; color: var(--text-muted); margin-bottom: 6px; }
-    .metric-value { font-size: 26px; font-weight: 600; color: #fff; line-height: 1; }
-    .metric-sub { font-size: 11px; color: var(--text-dim); margin-top: 5px; }
+/* CONTAINER */
+.container { max-width:1200px; margin:auto; padding:1.5rem; }
 
-    /* ── Two cols ── */
-    .two-cols {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-    @media (max-width: 700px) { .two-cols { grid-template-columns: 1fr; } }
+.section-title {
+  font-size:12px;
+  color:var(--cyan);
+  margin:20px 0;
+  border-bottom:1px solid var(--border);
+  padding-bottom:5px;
+}
 
-    /* ── Commits ── */
-    .commits-box {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    .commit-item {
-      padding: 10px 16px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-    }
-    .commit-item:last-child { border-bottom: none; }
-    .cdot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--blue);
-      margin-top: 5px;
-      flex-shrink: 0;
-    }
-    .cdot.fix  { background: var(--red); }
-    .cdot.feat { background: var(--green); }
-    .cdot.chore { background: var(--amber); }
-    .commit-msg { font-size: 13px; color: #c8daea; }
-    .commit-meta { font-size: 11px; color: var(--text-dim); margin-top: 3px; }
-    .commit-sha { font-family: monospace; color: var(--blue); }
+/* METRICS */
+.metrics {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:10px;
+}
+.metric {
+  background:var(--bg-card);
+  padding:15px;
+  border-radius:10px;
+  border:1px solid var(--border);
+}
+.metric-value { font-size:22px; }
 
-    /* ── Progress ── */
-    .progress-box {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1.25rem;
-    }
-    .prog-item { margin-bottom: 14px; }
-    .prog-item:last-child { margin-bottom: 0; }
-    .prog-head { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; }
-    .prog-name { color: #c8daea; }
-    .prog-pct  { color: var(--cyan); font-weight: 500; }
-    .prog-bg   { background: var(--border); border-radius: 4px; height: 8px; overflow: hidden; }
-    .prog-fill { height: 100%; border-radius: 4px; transition: width .6s ease; }
+/* CHARACTERS */
+.chars-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:20px;
+}
 
-    /* ── Bugs ── */
-    .bugs-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 10px;
-      margin-bottom: 2rem;
-    }
-    .bug-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1rem 1.25rem;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .bug-icon {
-      width: 36px; height: 36px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      font-weight: 600;
-      flex-shrink: 0;
-    }
-    .bug-label { font-size: 12px; color: var(--text-muted); }
-    .bug-count { font-size: 20px; font-weight: 600; }
+.char-card {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+}
 
-    /* ── Characters ── */
-    .chars-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.25rem;
-      margin-bottom: 2rem;
-    }
-    .char-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .char-header {
-      background: var(--bg-header);
-      border-bottom: 1px solid var(--border);
-      padding: 1rem 1.25rem;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .char-avatar {
-      width: 52px; height: 52px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      font-weight: 600;
-      flex-shrink: 0;
-    }
-    .char-name { font-size: 17px; font-weight: 600; color: #fff; }
-    .char-role { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-    .char-body { padding: 1.25rem; }
-    .char-lore {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin-bottom: 1rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .stat-row { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
-    .stat-name { font-size: 11px; color: var(--text-dim); width: 68px; flex-shrink: 0; }
-    .stat-bar-bg { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
-    .stat-bar { height: 100%; border-radius: 3px; }
-    .stat-val { font-size: 11px; color: #c8daea; width: 30px; text-align: right; }
-    .tags { margin-top: 12px; }
-    .tag {
-      display: inline-block;
-      font-size: 10px;
-      padding: 3px 9px;
-      border-radius: 20px;
-      margin: 2px 2px 0 0;
-    }
+.char-header {
+  background:var(--bg-header);
+  padding:15px;
+  border-bottom:1px solid var(--border);
+}
 
-    /* ── QA Table ── */
-    .qa-table-wrap {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      overflow: hidden;
-      margin-bottom: 2rem;
-    }
-    table { width: 100%; border-collapse: collapse; font-size: 13px; }
-    thead th {
-      background: var(--bg-header);
-      padding: 10px 16px;
-      text-align: left;
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--cyan);
-      letter-spacing: .5px;
-      border-bottom: 1px solid var(--border);
-    }
-    tbody td { padding: 9px 16px; border-bottom: 1px solid var(--border); color: #c8daea; }
-    tbody tr:last-child td { border-bottom: none; }
-    tbody tr:hover { background: rgba(27,108,168,.08); }
-    .status-pill {
-      display: inline-block;
-      font-size: 10px;
-      font-weight: 500;
-      padding: 2px 10px;
-      border-radius: 20px;
-    }
-    .ok   { background: #0b3320; color: #5dcaa5; }
-    .pend { background: #2a1a06; color: #ef9f27; }
-    .high { background: #1f0e0e; color: #f09595; }
-    .low  { background: #0d2137; color: #7bafd4; }
+.char-name { font-size:18px; }
+.char-role { font-size:12px; color:var(--text-muted); }
 
-    /* ── Footer ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 1.25rem 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: .5rem;
-      margin-top: 2rem;
-    }
-    footer span { font-size: 12px; color: var(--text-dim); }
+.char-sprite-wrap {
+  background:#0b1d31;
+  padding:15px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:220px;
+  border-bottom:1px solid var(--border);
+}
 
-    /* ── Loading / Error ── */
-    .loading { padding: 1.5rem; text-align: center; color: var(--text-dim); font-size: 13px; }
-    .err-box {
-      margin: 1rem;
-      padding: 1rem;
-      background: #1f0e0e;
-      border: 1px solid #a32d2d;
-      border-radius: 8px;
-      color: #f09595;
-      font-size: 13px;
-    }
-  </style>
+.char-sprite {
+  max-width:100%;
+  max-height:200px;
+  object-fit:contain;
+  image-rendering: pixelated;
+}
+
+.char-body { padding:15px; }
+
+.stat-row {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:8px;
+}
+.stat-bar-bg {
+  flex:1;
+  height:6px;
+  background:var(--border);
+  border-radius:3px;
+}
+.stat-bar {
+  height:100%;
+  background:var(--cyan);
+  border-radius:3px;
+}
+</style>
 </head>
+
 <body>
 
-<!-- Hero -->
 <div class="hero">
   <div>
-    <div>
-      <span class="badge badge-blue">ETEC São José do Rio Pardo</span>
-      <span class="badge badge-green">TCC 2026</span>
-    </div>
     <h1>ETEC Fighting Game</h1>
-    <p class="hero-sub">Jogo de luta 2D — Acompanhamento do desenvolvimento</p>
+    <p>Acompanhamento do desenvolvimento</p>
   </div>
-  <div class="hero-right">
-    <p class="hero-meta"><span class="live-dot"></span>Atualizado em tempo real via GitHub API</p>
-    <a href="https://github.com/Caetas123/TCC/tree/development" target="_blank">github.com/Caetas123/TCC</a>
-    <p style="font-size:12px;color:var(--text-dim);margin-top:6px" id="last-sync">Carregando...</p>
+  <div>
+    <a href="https://github.com/Caetas123/TCC" target="_blank">Repositório GitHub</a>
+    <p id="last-sync">Sincronizando...</p>
   </div>
 </div>
 
 <div class="container">
 
-  <!-- Métricas -->
-  <div class="section">
-    <div class="section-title">Visão geral</div>
-    <div class="metrics">
-      <div class="metric">
-        <div class="metric-label">Total de commits</div>
-        <div class="metric-value" id="total-commits">—</div>
-        <div class="metric-sub">branch development</div>
-      </div>
-      <div class="metric">
-        <div class="metric-label">Último commit</div>
-        <div class="metric-value" style="font-size:16px;padding-top:4px" id="last-commit-date">—</div>
-        <div class="metric-sub" id="last-commit-author">—</div>
-      </div>
-      <div class="metric">
-        <div class="metric-label">Bugs corrigidos</div>
-        <div class="metric-value" style="color:var(--green)">15</div>
-        <div class="metric-sub">de 20 relatados</div>
-      </div>
-      <div class="metric">
-        <div class="metric-label">Scripts C#</div>
-        <div class="metric-value">19</div>
-        <div class="metric-sub">Assets/Scripts</div>
-      </div>
-      <div class="metric">
-        <div class="metric-label">Personagens</div>
-        <div class="metric-value">2</div>
-        <div class="metric-sub">Diego · Jamanta</div>
-      </div>
-      <div class="metric">
-        <div class="metric-label">Cenas</div>
-        <div class="metric-value">7</div>
-        <div class="metric-sub">incluindo 2 arenas</div>
-      </div>
+  <div class="section-title">Visão geral</div>
+  <div class="metrics">
+    <div class="metric">
+      <div>Total commits</div>
+      <div class="metric-value" id="total-commits">—</div>
+    </div>
+    <div class="metric">
+      <div>Último commit</div>
+      <div class="metric-value" id="last-commit-date">—</div>
+    </div>
+    <div class="metric">
+      <div>Scripts C#</div>
+      <div class="metric-value">19</div>
+    </div>
+    <div class="metric">
+      <div>Personagens</div>
+      <div class="metric-value">2</div>
     </div>
   </div>
 
-  <!-- Commits + Progresso -->
-  <div class="section">
-    <div class="two-cols">
-      <div>
-        <div class="section-title">Commits recentes</div>
-        <div class="commits-box" id="commits-list">
-          <div class="loading">Carregando commits...</div>
-        </div>
+  <div class="section-title">Personagens</div>
+
+  <div class="chars-grid">
+
+    <!-- DIEGO -->
+    <div class="char-card">
+      <div class="char-header">
+        <div class="char-name">Diego</div>
+        <div class="char-role">Lutador equilibrado</div>
       </div>
-      <div>
-        <div class="section-title">Progresso do projeto</div>
-        <div class="progress-box">
-          <div class="prog-item">
-            <div class="prog-head"><span class="prog-name">Menus e navegação</span><span class="prog-pct">95%</span></div>
-            <div class="prog-bg"><div class="prog-fill" style="width:95%;background:var(--green)"></div></div>
-          </div>
-          <div class="prog-item">
-            <div class="prog-head"><span class="prog-name">Correção de bugs QA</span><span class="prog-pct">75%</span></div>
-            <div class="prog-bg"><div class="prog-fill" style="width:75%;background:var(--blue)"></div></div>
-          </div>
-          <div class="prog-item">
-            <div class="prog-head"><span class="prog-name">Sistema de combate</span><span class="prog-pct">80%</span></div>
-            <div class="prog-bg"><div class="prog-fill" style="width:80%;background:var(--cyan)"></div></div>
-          </div>
-          <div class="prog-item">
-            <div class="prog-head"><span class="prog-name">Personagens</span><span class="prog-pct">40%</span></div>
-            <div class="prog-bg"><div class="prog-fill" style="width:40%;background:var(--pink)"></div></div>
-          </div>
-          <div class="prog-item">
-            <div class="prog-head"><span class="prog-name">Suporte a controles</span><span class="prog-pct">60%</span></div>
-            <div class="prog-bg"><div class="prog-fill" style="width:60%;background:var(--purple)"></div></div>
-          </div>
-          <div class="prog-item">
-            <div class="prog-head"><span class="prog-name">Polimento geral</span><span class="prog-pct">50%</span></div>
-            <div class="prog-bg"><div class="prog-fill" style="width:50%;background:var(--amber)"></div></div>
-          </div>
+
+      <div class="char-sprite-wrap">
+        <img id="img-diego" class="char-sprite" alt="Sprite Diego">
+      </div>
+
+      <div class="char-body">
+        <p>Estudante da Etec determinado a provar seu valor.</p>
+
+        <div class="stat-row">
+          Velocidade
+          <div class="stat-bar-bg"><div class="stat-bar" style="width:70%"></div></div>
+        </div>
+
+        <div class="stat-row">
+          Força
+          <div class="stat-bar-bg"><div class="stat-bar" style="width:75%"></div></div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Bugs -->
-  <div class="section">
-    <div class="section-title">Status dos bugs QA</div>
-    <div class="bugs-grid">
-      <div class="bug-card">
-        <div class="bug-icon" style="background:#0b3320;color:var(--green)">✓</div>
-        <div><div class="bug-count" style="color:var(--green)">15</div><div class="bug-label">Resolvidos</div></div>
+    <!-- JAMANTA -->
+    <div class="char-card">
+      <div class="char-header">
+        <div class="char-name">Jamanta</div>
+        <div class="char-role">Lutador pesado</div>
       </div>
-      <div class="bug-card">
-        <div class="bug-icon" style="background:#2a1a06;color:var(--amber)">!</div>
-        <div><div class="bug-count" style="color:var(--amber)">5</div><div class="bug-label">Pendentes</div></div>
+
+      <div class="char-sprite-wrap">
+        <img id="img-jamanta" class="char-sprite" alt="Sprite Jamanta">
       </div>
-      <div class="bug-card">
-        <div class="bug-icon" style="background:#1f0e0e;color:var(--red)">✕</div>
-        <div><div class="bug-count" style="color:var(--red)">10</div><div class="bug-label">Alta prioridade</div></div>
-      </div>
-      <div class="bug-card">
-        <div class="bug-icon" style="background:var(--bg-header);color:var(--blue-light)">#</div>
-        <div><div class="bug-count">20</div><div class="bug-label">Total relatados</div></div>
+
+      <div class="char-body">
+        <p>Grande, forte e resistente, mas mais lento.</p>
+
+        <div class="stat-row">
+          Velocidade
+          <div class="stat-bar-bg"><div class="stat-bar" style="width:40%"></div></div>
+        </div>
+
+        <div class="stat-row">
+          Força
+          <div class="stat-bar-bg"><div class="stat-bar" style="width:90%"></div></div>
+        </div>
       </div>
     </div>
+
   </div>
-
-  <!-- Tabela QA -->
-  <div class="section">
-    <div class="section-title">Relatório de bugs detalhado</div>
-    <div class="qa-table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Módulo</th>
-            <th>Descrição</th>
-            <th>Severidade</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>BUG001</td><td>Configurações &gt; Vídeo</td><td>Resolução não troca corretamente</td><td><span class="status-pill high">Alta</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG002</td><td>Configurações</td><td>Botões aparecem tortos/distorcidos</td><td><span class="status-pill high">Alta</span></td><td><span class="status-pill pend">Pendente</span></td></tr>
-          <tr><td>BUG003</td><td>Menu Principal</td><td>Botão deveria chamar 'Jogar'</td><td><span class="status-pill low">Baixa</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG004</td><td>Seleção de Personagem</td><td>Hover não funciona para todos os personagens</td><td><span class="status-pill pend">Média</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG005</td><td>Seleção de Personagem</td><td>Sem indicação visual de personagem selecionado</td><td><span class="status-pill pend">Média</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG006</td><td>Game Mode</td><td>Sem navegação por teclado</td><td><span class="status-pill high">Alta</span></td><td><span class="status-pill pend">Pendente</span></td></tr>
-          <tr><td>BUG007</td><td>Seleção de Personagem</td><td>Personagem não aparece ao navegar por teclado</td><td><span class="status-pill high">Alta</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG008</td><td>Seleção de Personagem</td><td>P1 consegue mexer na seleção do P2</td><td><span class="status-pill high">Alta</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG009</td><td>Configurações &gt; Controle</td><td>Mesmas teclas para múltiplos movimentos</td><td><span class="status-pill high">Alta</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG010</td><td>Game Arena</td><td>Teclado só aceito após clicar com o mouse</td><td><span class="status-pill pend">Média</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG011</td><td>Seleção de Personagem</td><td>Rounds e Time aparecem na tela errada</td><td><span class="status-pill pend">Média</span></td><td><span class="status-pill pend">Pendente</span></td></tr>
-          <tr><td>BUG012</td><td>Configurações</td><td>Falta botão Restaurar</td><td><span class="status-pill pend">Média</span></td><td><span class="status-pill pend">Pendente</span></td></tr>
-          <tr><td>BUG013</td><td>Geral</td><td>Menus só navegáveis por teclado após clicar</td><td><span class="status-pill high">Alta</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG014</td><td>Seleção de Personagem</td><td>Personagem inexistente pode ser selecionado</td><td><span class="status-pill high">Alta</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG015</td><td>Seleção de Personagem</td><td>Seleção persiste ao sair e voltar</td><td><span class="status-pill pend">Média</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG016</td><td>Configurações &gt; Áudio</td><td>Master Volume e Music Volume não alteram</td><td><span class="status-pill high">Alta</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG017</td><td>Configurações &gt; Idioma</td><td>Idioma retorna para EN ao navegar</td><td><span class="status-pill high">Alta</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG018</td><td>Seleção de Tempo</td><td>Tela TIME não traduzida para PT</td><td><span class="status-pill pend">Média</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG019</td><td>Seleção de Rounds</td><td>Tela ROUNDS não traduzida para PT</td><td><span class="status-pill pend">Média</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG020</td><td>Créditos</td><td>Créditos não mudam de idioma</td><td><span class="status-pill low">Baixa</span></td><td><span class="status-pill pend">Pendente</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- Personagens -->
-  <div class="section">
-    <div class="section-title">Personagens</div>
-    <div class="chars-grid">
-
-      <div class="char-card">
-        <div class="char-header">
-          <div class="char-avatar" style="background:#0d2137;color:var(--blue-light)">D</div>
-          <div>
-            <div class="char-name">Diego</div>
-            <div class="char-role">Lutador equilibrado</div>
-          </div>
-        </div>
-        <div class="char-body">
-          <p class="char-lore">Estudante da Etec determinado a provar seu valor. Combina velocidade e força de forma equilibrada, tornando-o ideal para quem está aprendendo a lutar. Seus golpes são precisos e confiáveis, sem pontos cegos claros.</p>
-          <div class="stat-row"><div class="stat-name">Vida</div><div class="stat-bar-bg"><div class="stat-bar" style="width:80%;background:var(--red)"></div></div><div class="stat-val">100</div></div>
-          <div class="stat-row"><div class="stat-name">Stamina</div><div class="stat-bar-bg"><div class="stat-bar" style="width:80%;background:var(--blue)"></div></div><div class="stat-val">100</div></div>
-          <div class="stat-row"><div class="stat-name">Velocidade</div><div class="stat-bar-bg"><div class="stat-bar" style="width:70%;background:var(--green)"></div></div><div class="stat-val">6</div></div>
-          <div class="stat-row"><div class="stat-name">Atk Normal</div><div class="stat-bar-bg"><div class="stat-bar" style="width:40%;background:var(--amber)"></div></div><div class="stat-val">10</div></div>
-          <div class="stat-row"><div class="stat-name">Especial</div><div class="stat-bar-bg"><div class="stat-bar" style="width:60%;background:var(--purple)"></div></div><div class="stat-val">25</div></div>
-          <div class="stat-row"><div class="stat-name">Ultimate</div><div class="stat-bar-bg"><div class="stat-bar" style="width:80%;background:var(--pink)"></div></div><div class="stat-val">50</div></div>
-          <div class="tags">
-            <span class="tag" style="background:#0b3320;color:#5dcaa5">equilibrado</span>
-            <span class="tag" style="background:#0d2137;color:var(--blue-light)">iniciante</span>
-            <span class="tag" style="background:#1a0d2a;color:#afa9ec">versátil</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="char-card">
-        <div class="char-header">
-          <div class="char-avatar" style="background:#1a1a3a;color:#afa9ec">J</div>
-          <div>
-            <div class="char-name">Jamanta</div>
-            <div class="char-role">Tanque pesado</div>
-          </div>
-        </div>
-        <div class="char-body">
-          <p class="char-lore">Uma força da natureza com golpes devastadores. Mais lento que Diego, mas seus ataques causam dano massivo — especialmente o Ultimate que pode virar completamente o rumo de uma luta em um único golpe certeiro.</p>
-          <div class="stat-row"><div class="stat-name">Vida</div><div class="stat-bar-bg"><div class="stat-bar" style="width:96%;background:var(--red)"></div></div><div class="stat-val">120</div></div>
-          <div class="stat-row"><div class="stat-name">Stamina</div><div class="stat-bar-bg"><div class="stat-bar" style="width:80%;background:var(--blue)"></div></div><div class="stat-val">100</div></div>
-          <div class="stat-row"><div class="stat-name">Velocidade</div><div class="stat-bar-bg"><div class="stat-bar" style="width:32%;background:var(--green)"></div></div><div class="stat-val">4</div></div>
-          <div class="stat-row"><div class="stat-name">Atk Normal</div><div class="stat-bar-bg"><div class="stat-bar" style="width:55%;background:var(--amber)"></div></div><div class="stat-val">15</div></div>
-          <div class="stat-row"><div class="stat-name">Especial</div><div class="stat-bar-bg"><div class="stat-bar" style="width:72%;background:var(--purple)"></div></div><div class="stat-val">35</div></div>
-          <div class="stat-row"><div class="stat-name">Ultimate</div><div class="stat-bar-bg"><div class="stat-bar" style="width:100%;background:var(--pink)"></div></div><div class="stat-val">70</div></div>
-          <div class="tags">
-            <span class="tag" style="background:#1f0e0e;color:#f09595">tanque</span>
-            <span class="tag" style="background:#260c1e;color:#ed93b1">alto dano</span>
-            <span class="tag" style="background:#1a0d2a;color:#afa9ec">avançado</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-</div><!-- /container -->
-
-<footer>
-  <span>ETEC São José do Rio Pardo · TCC 2026 · Jogo de Luta 2D</span>
-  <span id="footer-sync">—</span>
-</footer>
+</div>
 
 <script>
-  const OWNER  = 'Caetas123';
-  const REPO   = 'TCC';
-  const BRANCH = 'development';
+const owner = "Caetas123";
+const repo = "TCC";
+const branch = "development";
 
-  function timeAgo(dateStr) {
-    const diff = Math.floor((Date.now() - new Date(dateStr)) / 1000);
-    if (diff < 60)    return 'agora';
-    if (diff < 3600)  return Math.floor(diff / 60) + 'm atrás';
-    if (diff < 86400) return Math.floor(diff / 3600) + 'h atrás';
-    return Math.floor(diff / 86400) + 'd atrás';
+/* Buscar commits */
+async function carregarCommits(){
+  const url = `https://api.github.com/repos/${owner}/${repo}/commits?sha=${branch}`;
+  const res = await fetch(url);
+  const commits = await res.json();
+
+  document.getElementById("total-commits").textContent = commits.length;
+  document.getElementById("last-commit-date").textContent =
+    new Date(commits[0].commit.author.date).toLocaleDateString();
+
+  document.getElementById("last-sync").textContent =
+    "Última sincronização: " + new Date().toLocaleString();
+}
+
+/* Buscar sprites */
+async function buscarPrimeiroSprite(caminho){
+  const url = `https://api.github.com/repos/${owner}/${repo}/contents/${caminho}?ref=${branch}`;
+  const res = await fetch(url);
+  const arquivos = await res.json();
+
+  const imagem = arquivos.find(a =>
+    a.type === "file" && /\.(png|jpg)$/i.test(a.name)
+  );
+
+  return imagem ? imagem.download_url : null;
+}
+
+async function carregarSprites(){
+  try{
+    const diego = await buscarPrimeiroSprite("Assets/Personagens/Diego/Sprites");
+    const jamanta = await buscarPrimeiroSprite("Assets/Personagens/Jamanta/Sprites");
+
+    if(diego) document.getElementById("img-diego").src = diego;
+    if(jamanta) document.getElementById("img-jamanta").src = jamanta;
+  }catch(e){
+    console.log("Erro ao carregar sprites");
   }
+}
 
-  function dotClass(msg) {
-    if (!msg) return '';
-    const m = msg.toLowerCase();
-    if (m.startsWith('fix'))   return 'fix';
-    if (m.startsWith('feat'))  return 'feat';
-    if (m.startsWith('chore')) return 'chore';
-    return '';
-  }
-
-  async function loadCommits() {
-    const el = document.getElementById('commits-list');
-    try {
-      const res = await fetch(
-        `https://api.github.com/repos/${OWNER}/${REPO}/commits?sha=${BRANCH}&per_page=10`
-      );
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      const commits = await res.json();
-
-      if (commits.length > 0) {
-        const last = commits[0].commit.author;
-        document.getElementById('last-commit-date').textContent  = timeAgo(last.date);
-        document.getElementById('last-commit-author').textContent = last.name;
-      }
-
-      el.innerHTML = commits.map(c => {
-        const msg    = c.commit.message.split('\n')[0];
-        const sha    = c.sha.substring(0, 7);
-        const author = c.commit.author.name;
-        const date   = timeAgo(c.commit.author.date);
-        const dc     = dotClass(msg);
-        return `<div class="commit-item">
-          <div class="cdot ${dc}"></div>
-          <div>
-            <div class="commit-msg">${msg.substring(0,90)}${msg.length > 90 ? '…' : ''}</div>
-            <div class="commit-meta">${author} · ${date} · <span class="commit-sha">${sha}</span></div>
-          </div>
-        </div>`;
-      }).join('');
-
-      const now = new Date().toLocaleString('pt-BR');
-      document.getElementById('last-sync').textContent    = 'Último sync: ' + now;
-      document.getElementById('footer-sync').textContent = 'Último sync: ' + now;
-
-    } catch (e) {
-      el.innerHTML = `<div class="err-box">Não foi possível carregar commits do GitHub.<br>Verifique sua conexão ou tente recarregar a página.</div>`;
-    }
-  }
-
-  async function loadTotalCommits() {
-    try {
-      const res  = await fetch(
-        `https://api.github.com/repos/${OWNER}/${REPO}/commits?sha=${BRANCH}&per_page=1`
-      );
-      const link = res.headers.get('Link') || '';
-      const match = link.match(/page=(\d+)>; rel="last"/);
-      if (match) {
-        document.getElementById('total-commits').textContent = match[1];
-      }
-    } catch (e) {}
-  }
-
-  loadCommits();
-  loadTotalCommits();
+carregarCommits();
+carregarSprites();
 </script>
+
 </body>
-</html>
+            </html>
