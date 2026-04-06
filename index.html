@@ -220,32 +220,6 @@
     }
     .char-name { font-size: 17px; font-weight: 600; color: #fff; }
     .char-role { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-
-    /* Sprite do personagem */
-    .char-sprite-wrap {
-      background: linear-gradient(180deg, rgba(10,22,40,.35), rgba(13,33,55,.2));
-      border-bottom: 1px solid var(--border);
-      padding: 14px 12px 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 180px;
-    }
-    .char-sprite {
-      max-width: 130%;
-      max-height: 170px;
-      object-fit: contain;
-      image-rendering: pixelated;
-      transform: scale(1.08);
-      transform-origin: center;
-      filter: drop-shadow(0 6px 12px rgba(0,0,0,.25));
-    }
-    .char-sprite[hidden] { display: none; }
-    .char-sprite-fallback {
-      font-size: 12px;
-      color: var(--text-dim);
-      text-align: center;
-    }
     .char-body { padding: 1.25rem; }
     .char-lore {
       font-size: 13px;
@@ -326,6 +300,25 @@
       border-radius: 8px;
       color: #f09595;
       font-size: 13px;
+    }
+    /* ── Sprite Personagem ── */
+    .char-sprite-wrap {
+      background: linear-gradient(180deg, rgba(10,22,40,.35), rgba(13,33,55,.2));
+      border-bottom: 1px solid var(--border);
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 220px;
+    }
+
+    .char-sprite {
+      width: 64px;
+      height: 64px;
+      image-rendering: pixelated;
+      transform: scale(3.2); /* ZOOM FORTE */
+      transform-origin: center;
+      filter: drop-shadow(0 8px 14px rgba(0,0,0,.35));
     }
   </style>
 </head>
@@ -428,87 +421,71 @@
     </div>
   </div>
 
-  <!-- Bugs -->
+  <!-- Bugs — métricas dinâmicas via GitHub Issues -->
   <div class="section">
     <div class="section-title">Status dos bugs QA</div>
     <div class="bugs-grid">
       <div class="bug-card">
         <div class="bug-icon" style="background:#0b3320;color:var(--green)">✓</div>
-        <div><div class="bug-count" style="color:var(--green)">15</div><div class="bug-label">Resolvidos</div></div>
+        <div><div class="bug-count" style="color:var(--green)" id="count-closed">—</div><div class="bug-label">Resolvidos</div></div>
       </div>
       <div class="bug-card">
         <div class="bug-icon" style="background:#2a1a06;color:var(--amber)">!</div>
-        <div><div class="bug-count" style="color:var(--amber)">5</div><div class="bug-label">Pendentes</div></div>
+        <div><div class="bug-count" style="color:var(--amber)" id="count-open">—</div><div class="bug-label">Pendentes</div></div>
       </div>
       <div class="bug-card">
         <div class="bug-icon" style="background:#1f0e0e;color:var(--red)">✕</div>
-        <div><div class="bug-count" style="color:var(--red)">10</div><div class="bug-label">Alta prioridade</div></div>
+        <div><div class="bug-count" style="color:var(--red)" id="count-high">—</div><div class="bug-label">Alta prioridade</div></div>
       </div>
       <div class="bug-card">
         <div class="bug-icon" style="background:var(--bg-header);color:var(--blue-light)">#</div>
-        <div><div class="bug-count">20</div><div class="bug-label">Total relatados</div></div>
+        <div><div class="bug-count" id="count-total">—</div><div class="bug-label">Total de issues</div></div>
       </div>
     </div>
   </div>
 
-  <!-- Tabela QA -->
+  <!-- Tabela de issues dinâmica -->
   <div class="section">
-    <div class="section-title">Relatório de bugs detalhado</div>
+    <div class="section-title">Issues do repositório</div>
     <div class="qa-table-wrap">
       <table>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Módulo</th>
-            <th>Descrição</th>
-            <th>Severidade</th>
+            <th>#</th>
+            <th>Título</th>
+            <th>Labels</th>
             <th>Status</th>
+            <th>Aberto por</th>
           </tr>
         </thead>
-        <tbody>
-          <tr><td>BUG001</td><td>Configurações &gt; Vídeo</td><td>Resolução não troca corretamente</td><td><span class="status-pill high">Alta</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG002</td><td>Configurações</td><td>Botões aparecem tortos/distorcidos</td><td><span class="status-pill high">Alta</span></td><td><span class="status-pill pend">Pendente</span></td></tr>
-          <tr><td>BUG003</td><td>Menu Principal</td><td>Botão deveria chamar 'Jogar'</td><td><span class="status-pill low">Baixa</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG004</td><td>Seleção de Personagem</td><td>Hover não funciona para todos os personagens</td><td><span class="status-pill pend">Média</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG005</td><td>Seleção de Personagem</td><td>Sem indicação visual de personagem selecionado</td><td><span class="status-pill pend">Média</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG006</td><td>Game Mode</td><td>Sem navegação por teclado</td><td><span class="status-pill high">Alta</span></td><td><span class="status-pill pend">Pendente</span></td></tr>
-          <tr><td>BUG007</td><td>Seleção de Personagem</td><td>Personagem não aparece ao navegar por teclado</td><td><span class="status-pill high">Alta</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG008</td><td>Seleção de Personagem</td><td>P1 consegue mexer na seleção do P2</td><td><span class="status-pill high">Alta</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG009</td><td>Configurações &gt; Controle</td><td>Mesmas teclas para múltiplos movimentos</td><td><span class="status-pill high">Alta</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG010</td><td>Game Arena</td><td>Teclado só aceito após clicar com o mouse</td><td><span class="status-pill pend">Média</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG011</td><td>Seleção de Personagem</td><td>Rounds e Time aparecem na tela errada</td><td><span class="status-pill pend">Média</span></td><td><span class="status-pill pend">Pendente</span></td></tr>
-          <tr><td>BUG012</td><td>Configurações</td><td>Falta botão Restaurar</td><td><span class="status-pill pend">Média</span></td><td><span class="status-pill pend">Pendente</span></td></tr>
-          <tr><td>BUG013</td><td>Geral</td><td>Menus só navegáveis por teclado após clicar</td><td><span class="status-pill high">Alta</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG014</td><td>Seleção de Personagem</td><td>Personagem inexistente pode ser selecionado</td><td><span class="status-pill high">Alta</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG015</td><td>Seleção de Personagem</td><td>Seleção persiste ao sair e voltar</td><td><span class="status-pill pend">Média</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG016</td><td>Configurações &gt; Áudio</td><td>Master Volume e Music Volume não alteram</td><td><span class="status-pill high">Alta</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG017</td><td>Configurações &gt; Idioma</td><td>Idioma retorna para EN ao navegar</td><td><span class="status-pill high">Alta</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG018</td><td>Seleção de Tempo</td><td>Tela TIME não traduzida para PT</td><td><span class="status-pill pend">Média</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG019</td><td>Seleção de Rounds</td><td>Tela ROUNDS não traduzida para PT</td><td><span class="status-pill pend">Média</span></td><td><span class="status-pill ok">Resolvido</span></td></tr>
-          <tr><td>BUG020</td><td>Créditos</td><td>Créditos não mudam de idioma</td><td><span class="status-pill low">Baixa</span></td><td><span class="status-pill pend">Pendente</span></td></tr>
+        <tbody id="issues-tbody">
+          <tr><td colspan="5" style="text-align:center;padding:1.5rem;color:var(--text-dim)">Carregando issues...</td></tr>
         </tbody>
       </table>
     </div>
   </div>
 
-  <!-- Personagens -->
-  <div class="section">
-    <div class="section-title">Personagens</div>
-    <div class="chars-grid">
+<!-- Personagens -->
+<div class="section">
+  <div class="section-title">Personagens</div>
+  <div class="chars-grid">
 
-      <div class="char-card">
-        <div class="char-header">
-          <div class="char-avatar" style="background:#0d2137;color:var(--blue-light)">D</div>
-          <div>
-            <div class="char-name">Diego</div>
-            <div class="char-role">Lutador equilibrado</div>
-          </div>
+    <!-- DIEGO -->
+    <div class="char-card">
+      <div class="char-header">
+        <div class="char-avatar" style="background:#0d2137;color:var(--blue-light)">D</div>
+        <div>
+          <div class="char-name">Diego</div>
+          <div class="char-role">Lutador equilibrado</div>
         </div>
-        <div class="char-sprite-wrap">
-          <img id="img-diego" class="char-sprite" alt="Sprite do Diego" hidden>
-          <div id="fallback-diego" class="char-sprite-fallback">Sprite não encontrado</div>
-        </div>
-        <div class="char-body">
+      </div>
+
+      <!-- SPRITE -->
+      <div class="char-sprite-wrap">
+        <img id="img-diego" class="char-sprite">
+      </div>
+
+      <div class="char-body">
           <p class="char-lore">Estudante da Etec determinado a provar seu valor. Combina velocidade e força de forma equilibrada, tornando-o ideal para quem está aprendendo a lutar. Seus golpes são precisos e confiáveis, sem pontos cegos claros.</p>
           <div class="stat-row"><div class="stat-name">Vida</div><div class="stat-bar-bg"><div class="stat-bar" style="width:80%;background:var(--red)"></div></div><div class="stat-val">100</div></div>
           <div class="stat-row"><div class="stat-name">Stamina</div><div class="stat-bar-bg"><div class="stat-bar" style="width:80%;background:var(--blue)"></div></div><div class="stat-val">100</div></div>
@@ -517,26 +494,29 @@
           <div class="stat-row"><div class="stat-name">Especial</div><div class="stat-bar-bg"><div class="stat-bar" style="width:60%;background:var(--purple)"></div></div><div class="stat-val">25</div></div>
           <div class="stat-row"><div class="stat-name">Ultimate</div><div class="stat-bar-bg"><div class="stat-bar" style="width:80%;background:var(--pink)"></div></div><div class="stat-val">50</div></div>
           <div class="tags">
-            <span class="tag" style="background:#0b3320;color:#5dcaa5">Equilibrado</span>
-            <span class="tag" style="background:#0d2137;color:var(--blue-light)">Iniciante</span>
-            <span class="tag" style="background:#1a0d2a;color:#afa9ec">Versátil</span>
+            <span class="tag" style="background:#0b3320;color:#5dcaa5">equilibrado</span>
+            <span class="tag" style="background:#0d2137;color:var(--blue-light)">iniciante</span>
+            <span class="tag" style="background:#1a0d2a;color:#afa9ec">versátil</span>
           </div>
         </div>
       </div>
 
-      <div class="char-card">
-        <div class="char-header">
-          <div class="char-avatar" style="background:#1a1a3a;color:#afa9ec">J</div>
-          <div>
-            <div class="char-name">Jamanta</div>
-            <div class="char-role">Tanque pesado</div>
-          </div>
+      <!-- JAMANTA -->
+    <div class="char-card">
+      <div class="char-header">
+        <div class="char-avatar" style="background:#1a1a3a;color:#afa9ec">J</div>
+        <div>
+          <div class="char-name">Jamanta</div>
+          <div class="char-role">Tanque pesado</div>
         </div>
-        <div class="char-sprite-wrap">
-          <img id="img-jamanta" class="char-sprite" alt="Sprite do Jamanta" hidden>
-          <div id="fallback-jamanta" class="char-sprite-fallback">Sprite não encontrado</div>
-        </div>
-        <div class="char-body">
+      </div>
+
+      <!-- SPRITE -->
+      <div class="char-sprite-wrap">
+        <img id="img-jamanta" class="char-sprite">
+      </div>
+
+      <div class="char-body">
           <p class="char-lore">Uma força da natureza com golpes devastadores. Mais lento que Diego, mas seus ataques causam dano massivo — especialmente o Ultimate que pode virar completamente o rumo de uma luta em um único golpe certeiro.</p>
           <div class="stat-row"><div class="stat-name">Vida</div><div class="stat-bar-bg"><div class="stat-bar" style="width:96%;background:var(--red)"></div></div><div class="stat-val">120</div></div>
           <div class="stat-row"><div class="stat-name">Stamina</div><div class="stat-bar-bg"><div class="stat-bar" style="width:80%;background:var(--blue)"></div></div><div class="stat-val">100</div></div>
@@ -545,9 +525,9 @@
           <div class="stat-row"><div class="stat-name">Especial</div><div class="stat-bar-bg"><div class="stat-bar" style="width:72%;background:var(--purple)"></div></div><div class="stat-val">35</div></div>
           <div class="stat-row"><div class="stat-name">Ultimate</div><div class="stat-bar-bg"><div class="stat-bar" style="width:100%;background:var(--pink)"></div></div><div class="stat-val">70</div></div>
           <div class="tags">
-            <span class="tag" style="background:#1f0e0e;color:#f09595">Tanque</span>
-            <span class="tag" style="background:#260c1e;color:#ed93b1">Alto dano</span>
-            <span class="tag" style="background:#1a0d2a;color:#afa9ec">Avançado</span>
+            <span class="tag" style="background:#1f0e0e;color:#f09595">tanque</span>
+            <span class="tag" style="background:#260c1e;color:#ed93b1">alto dano</span>
+            <span class="tag" style="background:#1a0d2a;color:#afa9ec">avançado</span>
           </div>
         </div>
       </div>
@@ -623,69 +603,6 @@
     }
   }
 
-
-
-  async function getRepoContents(path) {
-    const encodedPath = path.split('/').map(encodeURIComponent).join('/');
-    const res = await fetch(
-      `https://api.github.com/repos/${OWNER}/${REPO}/contents/${encodedPath}?ref=${BRANCH}`
-    );
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    return res.json();
-  }
-
-  async function findFirstImage(paths) {
-    for (const path of paths) {
-      try {
-        const items = await getRepoContents(path);
-        if (!Array.isArray(items)) continue;
-
-        const image = items.find(item =>
-          item.type === 'file' && /\.(png|jpg|jpeg|webp)$/i.test(item.name)
-        );
-
-        if (image?.download_url) return image.download_url;
-      } catch (e) {}
-    }
-    return null;
-  }
-
-  async function loadCharacterSprites() {
-    const configs = [
-      {
-        paths: [
-          'Assets/Personagens/Diego/Sprites',
-          'Assets/Personagens/Diego',
-          'Assets/Sprites/Diego'
-        ],
-        imgId: 'img-diego',
-        fallbackId: 'fallback-diego'
-      },
-      {
-        paths: [
-          'Assets/Personagens/Jamanta/Sprites',
-          'Assets/Personagens/Jamanta',
-          'Assets/Sprites/Jamanta'
-        ],
-        imgId: 'img-jamanta',
-        fallbackId: 'fallback-jamanta'
-      }
-    ];
-
-    for (const cfg of configs) {
-      const img = document.getElementById(cfg.imgId);
-      const fallback = document.getElementById(cfg.fallbackId);
-      if (!img) continue;
-
-      const url = await findFirstImage(cfg.paths);
-      if (url) {
-        img.src = url;
-        img.hidden = false;
-        if (fallback) fallback.hidden = true;
-      }
-    }
-  }
-
   async function loadTotalCommits() {
     try {
       const res  = await fetch(
@@ -699,9 +616,105 @@
     } catch (e) {}
   }
 
+  // ── Issues dinâmicas via GitHub API ─────────────────────────────────────
+
+  function labelPill(label) {
+    const name = label.name.toLowerCase();
+    if (name.includes('alta') || name.includes('high') || name === 'critical' || name === 'bug')
+      return `<span class="status-pill high">${label.name}</span>`;
+    if (name.includes('media') || name.includes('média') || name.includes('medium'))
+      return `<span class="status-pill pend">${label.name}</span>`;
+    if (name.includes('baixa') || name.includes('low'))
+      return `<span class="status-pill low">${label.name}</span>`;
+    if (name.includes('enhancement') || name.includes('feat'))
+      return `<span class="status-pill" style="background:#0b3320;color:#5dcaa5">${label.name}</span>`;
+    return `<span class="status-pill" style="background:#${label.color}22;color:#${label.color}">${label.name}</span>`;
+  }
+
+  async function loadIssues() {
+    const tbody = document.getElementById('issues-tbody');
+    if (!tbody) return;
+    try {
+      const [resOpen, resClosed] = await Promise.all([
+        fetch(`https://api.github.com/repos/${OWNER}/${REPO}/issues?state=open&per_page=50`),
+        fetch(`https://api.github.com/repos/${OWNER}/${REPO}/issues?state=closed&per_page=50`)
+      ]);
+      if (!resOpen.ok || !resClosed.ok) throw new Error('Erro na API');
+
+      const filterIssues = arr => arr.filter(i => !i.pull_request);
+      const openIssues   = filterIssues(await resOpen.json());
+      const closedIssues = filterIssues(await resClosed.json());
+      const allIssues    = [...openIssues, ...closedIssues].sort((a,b) => b.number - a.number);
+
+      const highLabels = ['alta','high','critical','bug'];
+      const countHigh  = allIssues.filter(i =>
+        i.labels.some(l => highLabels.some(h => l.name.toLowerCase().includes(h)))
+      ).length;
+
+      document.getElementById('count-closed').textContent = closedIssues.length;
+      document.getElementById('count-open').textContent   = openIssues.length;
+      document.getElementById('count-high').textContent   = countHigh;
+      document.getElementById('count-total').textContent  = allIssues.length;
+
+      if (allIssues.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:1.5rem;color:var(--text-dim)">Nenhuma issue encontrada no repositório.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = allIssues.map(issue => {
+        const statusClass = issue.state === 'closed' ? 'ok' : 'pend';
+        const statusLabel = issue.state === 'closed' ? 'Resolvido' : 'Aberto';
+        const labels = issue.labels.map(labelPill).join(' ');
+        const user   = issue.user?.login || '—';
+        const date   = timeAgo(issue.created_at);
+        return `<tr>
+          <td style="color:var(--blue);font-family:monospace">#${issue.number}</td>
+          <td><a href="${issue.html_url}" target="_blank" style="color:#c8daea">${issue.title}</a></td>
+          <td>${labels || '<span style="color:var(--text-dim);font-size:11px">sem label</span>'}</td>
+          <td><span class="status-pill ${statusClass}">${statusLabel}</span></td>
+          <td style="color:var(--text-dim);font-size:12px">${user} · ${date}</td>
+        </tr>`;
+      }).join('');
+
+    } catch(e) {
+      if (tbody) tbody.innerHTML = `<tr><td colspan="5"><div class="err-box">Não foi possível carregar as issues do GitHub.</div></td></tr>`;
+      ['count-closed','count-open','count-high','count-total'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = '—';
+      });
+    }
+  }
+  // ── SPRITES ──
+  async function buscarSprite(path) {
+    try {
+      const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}?ref=${BRANCH}`);
+      if (!res.ok) return null;
+
+      const files = await res.json();
+
+      const img = files.find(f =>
+        f.type === "file" && /\.(png|jpg|jpeg|webp)$/i.test(f.name)
+      );
+
+      return img ? img.download_url : null;
+
+    } catch {
+      return null;
+    }
+  }
+
+  async function loadSprites() {
+    const diego = await buscarSprite("Assets/Personagens/Diego/Sprites");
+    const jamanta = await buscarSprite("Assets/Personagens/Jamanta/Sprites");
+
+    if (diego) document.getElementById("img-diego").src = diego;
+    if (jamanta) document.getElementById("img-jamanta").src = jamanta;
+  }
+
+  loadSprites();
   loadCommits();
   loadTotalCommits();
-  loadCharacterSprites();
+  loadIssues();
 </script>
 </body>
 </html>
